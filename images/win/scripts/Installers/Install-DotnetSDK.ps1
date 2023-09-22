@@ -104,6 +104,26 @@ function InstallTools()
     }
 }
 
+function InstallPackages()
+{    
+    $dotnetNugetPackages = (Get-ToolsetContent).dotnet.packages
+
+    cd $env:tmp
+    mkdir tmppackages
+    pushd tmppackages
+    dotnet new classlib
+
+    ForEach ($nugetPackage in $dotnetNugetPackages)
+    {
+        ForEach ($packageVersion in $($nugetPackage.versions))
+        {
+            dotnet add package $($nugetPackage.name) --version $packageVersion
+        }
+    }
+
+    popd
+}
+
 function RunPostInstallationSteps()
 {
     # Add dotnet to PATH
@@ -127,5 +147,6 @@ function RunPostInstallationSteps()
 InstallAllValidSdks
 RunPostInstallationSteps
 InstallTools
+InstallPackages
 
 Invoke-PesterTests -TestFile "DotnetSDK"
