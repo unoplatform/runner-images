@@ -165,6 +165,7 @@ source "azure-arm" "image" {
   object_id                              = "${var.object_id}"
   os_disk_size_gb                        = "256"
   os_type                                = "Windows"
+  disk_caching_type                      = "ReadOnly"
   private_virtual_network_with_public_ip = "${var.private_virtual_network_with_public_ip}"
   subscription_id                        = "${var.subscription_id}"
   temp_resource_group_name               = "${var.temp_resource_group_name}"
