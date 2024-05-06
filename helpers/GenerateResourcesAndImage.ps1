@@ -207,9 +207,10 @@ Function GenerateResourcesAndImage {
     }
     Write-Debug "Tags JSON: $TagsJson."
 
-    $InstallPassword = $env:UserName + [System.GUID]::NewGuid().ToString().ToUpper()
+    $InstallPassword = "myuser" + [System.GUID]::NewGuid().ToString().ToUpper()
+    Write-Host "password: $InstallPassword"
 
-    Write-Host "Downloading packer plugins..."
+    Write-Host "Downloading packer plugins... 1"
     & $PackerBinary init $TemplatePath
 
     if ($LastExitCode -ne 0) {
